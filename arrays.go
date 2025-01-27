@@ -22,21 +22,58 @@ func MaximumLengthSubstring(s string) int {
 	return maxLength
 }
 
-func BinarySearch(nums []int, n int) (steps, index int) {
-	low, high := 0, len(nums)-1
-	for low <= high {
+func binarySearch(nums []int, n, lo, hi int) (index, steps int) {
+	if hi == -1 {
+		hi = len(nums) - 1
+	}
+
+	for lo <= hi {
 		steps++
-		middle := (low + high) / 2
-		if nums[middle] == n {
-			index = middle
+		mid := (lo + hi) / 2
+		if nums[mid] == n {
+			index = mid
 			return
-		} else if nums[middle] < n {
-			low = middle + 1
+		} else if nums[mid] < n {
+			lo = mid + 1
 		} else {
-			high = middle
+			hi = mid
 		}
 	}
+
+	if lo < len(nums) && nums[lo] == n {
+		index = lo
+		return
+	}
+
 	index = -1
+	return
+}
+
+func ExponentialSearch(arr []int, target int) (index, steps int) {
+	if arr[0] == target {
+		index = 0
+		steps = 0
+		return
+	}
+
+	n := len(arr)
+	i := 1
+	for i < n && arr[i] < target {
+		i *= 2
+	}
+
+	if i < n && arr[i] == target {
+		index = i
+		steps = 0
+		return
+	}
+	index, steps = binarySearch(arr, target, i/2, min(i, n-1))
+	return
+}
+
+func BinarySearch(nums []int, n int) (steps, index int) {
+	low, high := 0, len(nums)-1
+	index, steps = binarySearch(nums, n, low, high)
 	return
 }
 
