@@ -6,6 +6,17 @@ import (
 	"github.com/i9si-sistemas/assert"
 )
 
+func TestFirstUniqueCharacterInAString(t *testing.T) {
+	index := FirstUniqChar("leetcode")
+	assert.Equal(t, index, 0)
+
+	index = FirstUniqChar("loveleetcode")
+	assert.Equal(t, index, 2)
+
+	index = FirstUniqChar("aabb")
+	assert.Equal(t, index, -1)
+}
+
 func TestMaximumLengthSubstringWithTwoOccurrences(t *testing.T) {
 	result := MaximumLengthSubstring("bcbbbcba")
 	assert.Equal(t, result, 4)

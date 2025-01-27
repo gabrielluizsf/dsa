@@ -1,5 +1,26 @@
 package dsa
 
+func FirstUniqChar(s string) int {
+	charMap := make(map[rune][2]int)
+
+	for idx, ch := range s {
+		if val, exists := charMap[ch]; exists {
+			charMap[ch] = [2]int{val[0], val[1] + 1}
+		} else {
+			charMap[ch] = [2]int{idx, 1}
+		}
+	}
+
+	for _, ch := range s {
+		if charMap[ch][1] == 1 {
+			return charMap[ch][0]
+		}
+	}
+
+	return -1
+}
+
+
 func MaximumLengthSubstring(s string) int {
 	l, r := 0, 0
 	maxLength := 1
