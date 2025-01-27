@@ -6,6 +6,13 @@ import (
 	"github.com/i9si-sistemas/assert"
 )
 
+func TestMaximumLengthSubstringWithTwoOccurrences(t *testing.T) {
+	result := MaximumLengthSubstring("bcbbbcba")
+	assert.Equal(t, result, 4)
+	result = MaximumLengthSubstring("aaaa")
+	assert.Equal(t, result, 2)
+}
+
 func TestBinarySearch(t *testing.T) {
 	arr := []int{1}
 	steps, index := BinarySearch(arr, 1)
@@ -22,7 +29,6 @@ func TestBinarySearch(t *testing.T) {
 	assert.Equal(t, steps, 2)
 	assert.Equal(t, index, 2)
 
-	
 	arr = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	steps, index = BinarySearch(arr, 3)
 	assert.Equal(t, steps, 3)

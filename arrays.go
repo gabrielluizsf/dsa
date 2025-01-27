@@ -1,5 +1,27 @@
 package dsa
 
+func MaximumLengthSubstring(s string) int {
+	l, r := 0, 0
+	maxLength := 1
+	counter := make(map[byte]int)
+
+	counter[s[0]] = 1
+
+	for r < len(s)-1 {
+		r++
+		counter[s[r]]++
+		for counter[s[r]] == 3 {
+			counter[s[l]]--
+			l++
+		}
+		if currentLength := r - l + 1; currentLength > maxLength {
+			maxLength = currentLength
+		}
+	}
+
+	return maxLength
+}
+
 func BinarySearch(nums []int, n int) (steps, index int) {
 	low, high := 0, len(nums)-1
 	for low <= high {
