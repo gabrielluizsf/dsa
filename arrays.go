@@ -1,5 +1,23 @@
 package dsa
 
+func ContainsNearbyDuplicate(nums []int, k int) bool {
+   window := make(map[int]struct{})
+
+   for i, num := range nums {
+	   if _, found := window[num]; found {
+		   return true
+	   }
+
+	   window[num] = struct{}{}
+
+	   if len(window) > k {
+		   delete(window, nums[i-k])
+	   }
+   }
+
+   return false
+}
+
 func FirstUniqChar(s string) int {
 	charMap := make(map[rune][2]int)
 

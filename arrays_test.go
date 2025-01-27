@@ -6,6 +6,20 @@ import (
 	"github.com/i9si-sistemas/assert"
 )
 
+func TestContainsDuplicateII(t *testing.T) {
+	arr := []int{1,2,3,1}
+	ok := ContainsNearbyDuplicate(arr, 3)
+	assert.True(t, ok)
+	
+	arr = []int{1, 0, 1, 1}
+	ok = ContainsNearbyDuplicate(arr, 1)
+	assert.True(t, ok)
+
+	arr = []int{1,2,3,1,2,3}
+	ok = ContainsNearbyDuplicate(arr, 2)
+	assert.False(t, ok)
+}
+
 func TestFirstUniqueCharacterInAString(t *testing.T) {
 	index := FirstUniqChar("leetcode")
 	assert.Equal(t, index, 0)
