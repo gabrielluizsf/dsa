@@ -6,16 +6,30 @@ import (
 	"github.com/i9si-sistemas/assert"
 )
 
+func TestTwoSum(t *testing.T) {
+	arr := []int{2, 7, 11, 15}
+	result := TwoSum(arr, 9)
+	assert.Equal(t, result, []int{0, 1})
+
+	arr = []int{3, 2, 4}
+	result = TwoSum(arr, 6)
+	assert.Equal(t, result, []int{1, 2})
+
+	arr = []int{3, 3, 5, 6}
+	result = TwoSum(arr, 9)
+	assert.Equal(t, result, []int{1, 3})
+}
+
 func TestContainsDuplicateII(t *testing.T) {
-	arr := []int{1,2,3,1}
+	arr := []int{1, 2, 3, 1}
 	ok := ContainsNearbyDuplicate(arr, 3)
 	assert.True(t, ok)
-	
+
 	arr = []int{1, 0, 1, 1}
 	ok = ContainsNearbyDuplicate(arr, 1)
 	assert.True(t, ok)
 
-	arr = []int{1,2,3,1,2,3}
+	arr = []int{1, 2, 3, 1, 2, 3}
 	ok = ContainsNearbyDuplicate(arr, 2)
 	assert.False(t, ok)
 }

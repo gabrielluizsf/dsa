@@ -1,21 +1,33 @@
 package dsa
 
+func TwoSum(nums []int, target int) []int {
+	indexes := make(map[int]int, len(nums))
+	for i, num := range nums {
+		if j, found := indexes[target-num]; found {
+			return []int{j, i}
+		}
+		indexes[num] = i
+	}
+	return nil
+
+}
+
 func ContainsNearbyDuplicate(nums []int, k int) bool {
-   window := make(map[int]struct{})
+	window := make(map[int]struct{})
 
-   for i, num := range nums {
-	   if _, found := window[num]; found {
-		   return true
-	   }
+	for i, num := range nums {
+		if _, found := window[num]; found {
+			return true
+		}
 
-	   window[num] = struct{}{}
+		window[num] = struct{}{}
 
-	   if len(window) > k {
-		   delete(window, nums[i-k])
-	   }
-   }
+		if len(window) > k {
+			delete(window, nums[i-k])
+		}
+	}
 
-   return false
+	return false
 }
 
 func FirstUniqChar(s string) int {
@@ -37,7 +49,6 @@ func FirstUniqChar(s string) int {
 
 	return -1
 }
-
 
 func MaximumLengthSubstring(s string) int {
 	l, r := 0, 0
