@@ -81,3 +81,38 @@ func (ll *DoublyLinkedList) DisplayBackward() string {
 	}
 	return "[" + strings.Join(values, ", ") + "]"
 }
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func (l *ListNode) Add(val int) {
+	current := l
+	for current.Next != nil {
+		current = current.Next
+	}
+	current.Next = &ListNode{Val: val}
+}
+
+func (l *ListNode) String() string {
+	var result []string
+	current := l
+	for current != nil {
+		result = append(result, fmt.Sprintf("%d", current.Val))
+		current = current.Next
+	}
+	return strings.Join(result, " -> ") + " -> nil"
+}
+
+
+func ReverseList(head *ListNode) *ListNode {
+    var newList  *ListNode
+	for head != nil {
+		nextNode := head.Next
+		head.Next = newList
+		newList = head
+		head = nextNode
+	}
+	return newList
+}

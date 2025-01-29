@@ -36,3 +36,13 @@ func TestDoublyLinkedList(t *testing.T) {
 	expected = "[4, 3, 2]"
 	assert.Equal(t, result, expected)
 }
+
+func TestReverseLinkedList(t *testing.T) {
+	ll := &ListNode{Val: 1}
+	ll.Add(2)
+	ll.Add(3)
+	ll.Add(4)
+	ll.Add(5)
+	ll = ReverseList(ll)
+	assert.Equal(t, ll.String(), "5 -> 4 -> 3 -> 2 -> 1 -> nil")
+}
