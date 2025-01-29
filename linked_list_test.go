@@ -1,0 +1,38 @@
+package dsa
+
+import (
+	"testing"
+
+	"github.com/i9si-sistemas/assert"
+)
+
+func TestDoublyLinkedList(t *testing.T) {
+	dll := &DoublyLinkedList{}
+	dll.AddToFront(3)
+	dll.AddToFront(2)
+	dll.AddToFront(1)
+	dll.AddToEnd(4)
+	dll.AddToEnd(5)
+
+	result := dll.DisplayForward()
+	expected := "[1, 2, 3, 4, 5]"
+	assert.Equal(t, result, expected)
+
+	result = dll.DisplayBackward()
+	expected = "[5, 4, 3, 2, 1]"
+	assert.Equal(t, result, expected)
+
+	removed := dll.RemoveFromFront()
+	assert.Equal(t, removed, any(1))
+
+	removed = dll.RemoveFromEnd()
+	assert.Equal(t, removed, any(5))
+
+	result = dll.DisplayForward()
+	expected = "[2, 3, 4]"
+	assert.Equal(t, result, expected)
+
+	result = dll.DisplayBackward()
+	expected = "[4, 3, 2]"
+	assert.Equal(t, result, expected)
+}
