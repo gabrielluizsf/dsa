@@ -79,3 +79,56 @@ func TestLinkedListCycle(t *testing.T) {
     node2.Next = node3
     assert.False(t, HasCycle(node1))
 }
+
+func TestMergeTwoSortedLists(t *testing.T) {
+	tests := []struct {
+		name     string
+		list1    *ListNode
+		list2    *ListNode
+		expected *ListNode
+	}{
+		{
+			name:     "Ambas as listas vazias",
+			list1:    nil,
+			list2:    nil,
+			expected: nil,
+		},
+		{
+			name:     "Primeira lista vazia",
+			list1:    nil,
+			list2:    createList([]int{1, 3, 5}),
+			expected: createList([]int{1, 3, 5}),
+		},
+		{
+			name:     "Segunda lista vazia",
+			list1:    createList([]int{2, 4, 6}),
+			list2:    nil,
+			expected: createList([]int{2, 4, 6}),
+		},
+		{
+			name:     "Listas intercaladas",
+			list1:    createList([]int{1, 3, 5}),
+			list2:    createList([]int{2, 4, 6}),
+			expected: createList([]int{1, 2, 3, 4, 5, 6}),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := MergeTwoLists(tt.list1, tt.list2)
+			assert.Equal(t, result, tt.expected)
+		})
+	}
+}
+
+func createList(vals []int) *ListNode {
+	if len(vals) == 0 {
+		return nil
+	}
+	head := &ListNode{Val: vals[0]}
+	current := head
+	for _, v := range vals[1:] {
+		current.Add(v)
+	}
+	return head
+}
