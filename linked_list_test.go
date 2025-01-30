@@ -46,3 +46,14 @@ func TestReverseLinkedList(t *testing.T) {
 	ll = ReverseList(ll)
 	assert.Equal(t, ll.String(), "5 -> 4 -> 3 -> 2 -> 1 -> nil")
 }
+
+
+func TestMiddleOfTheLinkedList(t *testing.T) {
+	ll := &ListNode{Val: 1}
+	ll.Add(2)
+	ll.Add(3)
+	ll.Add(4)
+	ll.Add(5)
+	ll = MiddleNode(ll)
+	assert.Equal(t, ll.Val, 3)
+}

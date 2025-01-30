@@ -105,9 +105,8 @@ func (l *ListNode) String() string {
 	return strings.Join(result, " -> ") + " -> nil"
 }
 
-
 func ReverseList(head *ListNode) *ListNode {
-    var newList  *ListNode
+	var newList *ListNode
 	for head != nil {
 		nextNode := head.Next
 		head.Next = newList
@@ -115,4 +114,13 @@ func ReverseList(head *ListNode) *ListNode {
 		head = nextNode
 	}
 	return newList
+}
+
+func MiddleNode(head *ListNode) *ListNode {
+	aHead := head
+	for aHead != nil && aHead.Next != nil {
+		aHead = aHead.Next.Next
+		head = head.Next
+	}
+	return head
 }
