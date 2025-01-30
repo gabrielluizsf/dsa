@@ -126,9 +126,9 @@ func MiddleNode(head *ListNode) *ListNode {
 }
 
 func HasCycle(head *ListNode) bool {
-	if head == nil || head.Next == nil{
-        return false
-    }
+	if head == nil || head.Next == nil {
+		return false
+	}
 	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
 		slow = slow.Next
