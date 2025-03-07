@@ -49,3 +49,22 @@ func NumberOfSteps(num int) int {
 	}
 	return steps
 }
+
+//https://leetcode.com/problems/number-of-1-bits
+func HammingWeight(n int) int {
+	count := 0
+	for n != 0 {
+		count++
+		n &= n - 1
+	}
+	return count
+}
+
+//https://leetcode.com/problems/counting-bits
+func CountBits(n int) []int {
+	res := make([]int, n+1)
+	for i := 0; i <= n; i++ {
+		res[i] = res[i>>1] + i&1
+	}
+	return res
+}
