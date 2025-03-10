@@ -116,7 +116,7 @@ func (bt *BinaryTree[T]) treeVisualization() string {
 		if item.node.Right == nil {
 			newPrefix = item.prefix + "    "
 		}
-		
+
 		stack = append(stack, stackItem{item.node.Right, newPrefix, false})
 		stack = append(stack, stackItem{item.node.Left, newPrefix, true})
 	}
@@ -167,4 +167,23 @@ func (bt *BinaryTree[T]) PostOrderTraversal() []T {
 	}
 	traverse(bt.Root)
 	return result
+}
+
+/**
+ * Definition for a binary tree node.
+ * https://leetcode.com/problems/binary-tree-inorder-traversal/
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+ func inorderTraversal(root *TreeNode[int]) []int {
+    return inorder(root)
+}
+func inorder(root *TreeNode[int]) []int {
+    if root != nil {
+        return append(append(inorder(root.Left), root.Val), inorder(root.Right)...)
+    }
+    return []int{}
 }
