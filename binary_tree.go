@@ -1,0 +1,103 @@
+package dsa
+
+import (
+	"cmp"
+	"fmt"
+	"strings"
+)
+
+type TreeNode[T cmp.Ordered] struct {
+	Val   T
+	Left  *TreeNode[T]
+	Right *TreeNode[T]
+}
+
+func NewTreeNode[T cmp.Ordered](val T) *TreeNode[T] {
+	return &TreeNode[T]{Val: val}
+}
+
+type BinaryTree[T cmp.Ordered] struct {
+	Root *TreeNode[T]
+}
+
+func (bt *BinaryTree[T]) Insert(val T) {
+	newNode := NewTreeNode(val)
+	if bt.Root == nil {
+		bt.Root = newNode
+		return
+	}
+
+	node := bt.Root
+	for {
+		if val < node.Val {
+			if node.Left == nil {
+				node.Left = newNode
+				return
+			}
+			node = node.Left
+		} else {
+			if node.Right == nil {
+				node.Right = newNode
+				return
+			}
+			node = node.Right
+		}
+	}
+}
+
+func (bt *BinaryTree[T]) Search(val T) bool {
+	node := bt.Root
+	for node != nil {
+		if node.Val == val {
+			return true
+		}
+		if val < node.Val {
+			node = node.Left
+		} else {
+			node = node.Right
+		}
+	}
+	return false
+}
+
+func (bt *BinaryTree[T]) String() string {
+	if bt.Root == nil {
+		return "Empty Tree"
+	}
+
+	var sb strings.Builder
+	type stackItem struct {
+		node   *TreeNode[T]
+		prefix string
+		isLeft bool
+	}
+
+	stack := []stackItem{{bt.Root, "", false}}
+
+	for len(stack) > 0 {
+		item := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		if item.node == nil {
+			continue
+		}
+
+		sb.WriteString(item.prefix)
+		if item.isLeft {
+			sb.WriteString("├── ")
+		} else {
+			sb.WriteString("└── ")
+		}
+		sb.WriteString(fmt.Sprintf("%v\n", item.node.Val))
+
+		newPrefix := item.prefix + "│   "
+		if item.node.Right == nil {
+			newPrefix = item.prefix + "    "
+		}
+
+		stack = append(stack, stackItem{item.node.Right, newPrefix, false})
+		stack = append(stack, stackItem{item.node.Left, newPrefix, true})
+	}
+
+	return "\n" + sb.String()
+}
