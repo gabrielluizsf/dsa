@@ -76,5 +76,8 @@ func TestBinaryTree(t *testing.T) {
 	t.Run("https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal", func (t *testing.T)  {
 		out := buildTree([]int{9,3, 15, 20, 7}, []int{9, 15, 7, 20, 3})
 		assert.Equal(t, out.Val , 3)
+		tree := BinaryTree[int]{Root: out}
+		tree.TraversalVisualization = PreOrder
+		assert.Equal(t, tree.String(), "PreOrder Traversal: [3 9 20 15 7]")
 	})
 }
