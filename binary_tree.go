@@ -16,8 +16,17 @@ func NewTreeNode[T cmp.Ordered](val T) *TreeNode[T] {
 	return &TreeNode[T]{Val: val}
 }
 
+type TraversalVisualization string
+
+const (
+	InOrder   TraversalVisualization = "inOrder"
+	PostOrder TraversalVisualization = "postOrder"
+	PreOrder  TraversalVisualization = "preOrder"
+)
+
 type BinaryTree[T cmp.Ordered] struct {
 	Root *TreeNode[T]
+	TraversalVisualization
 }
 
 func (bt *BinaryTree[T]) Insert(val T) {
@@ -61,6 +70,19 @@ func (bt *BinaryTree[T]) Search(val T) bool {
 }
 
 func (bt *BinaryTree[T]) String() string {
+	switch bt.TraversalVisualization {
+	case PreOrder:
+		return fmt.Sprintf("PreOrder Traversal: %v", bt.PreOrderTraversal())
+	case PostOrder:
+		return fmt.Sprintf("PostOrder Traversal: %v", bt.PostOrderTraversal())
+	case InOrder:
+		return fmt.Sprintf("InOrder Traversal: %v", bt.InOrderTraversal())
+	default:
+		return bt.treeVisualization()
+	}
+}
+
+func (bt *BinaryTree[T]) treeVisualization() string {
 	if bt.Root == nil {
 		return "Empty Tree"
 	}
@@ -94,10 +116,55 @@ func (bt *BinaryTree[T]) String() string {
 		if item.node.Right == nil {
 			newPrefix = item.prefix + "    "
 		}
-
+		
 		stack = append(stack, stackItem{item.node.Right, newPrefix, false})
 		stack = append(stack, stackItem{item.node.Left, newPrefix, true})
 	}
 
 	return "\n" + sb.String()
+}
+
+func (bt *BinaryTree[T]) PreOrderTraversal() []T {
+	var result []T
+	var traverse func(*TreeNode[T])
+	traverse = func(node *TreeNode[T]) {
+		if node == nil {
+			return
+		}
+		result = append(result, node.Val)
+		traverse(node.Left)
+		traverse(node.Right)
+	}
+	traverse(bt.Root)
+	return result
+}
+
+func (bt *BinaryTree[T]) InOrderTraversal() []T {
+	var result []T
+	var traverse func(*TreeNode[T])
+	traverse = func(node *TreeNode[T]) {
+		if node == nil {
+			return
+		}
+		traverse(node.Left)
+		result = append(result, node.Val)
+		traverse(node.Right)
+	}
+	traverse(bt.Root)
+	return result
+}
+
+func (bt *BinaryTree[T]) PostOrderTraversal() []T {
+	var result []T
+	var traverse func(*TreeNode[T])
+	traverse = func(node *TreeNode[T]) {
+		if node == nil {
+			return
+		}
+		traverse(node.Left)
+		traverse(node.Right)
+		result = append(result, node.Val)
+	}
+	traverse(bt.Root)
+	return result
 }

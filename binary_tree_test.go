@@ -20,5 +20,19 @@ func TestBinaryTree(t *testing.T) {
 	assert.True(t, tree.Search(12))
 	assert.True(t, tree.Search(7))
 	assert.True(t, tree.Search(3))
-	t.Log(tree.String())
+	tree.TraversalVisualization = PreOrder
+	assert.Equal(t, tree.String(), "PreOrder Traversal: [10 5 3 7 15 12 18]")
+	tree.TraversalVisualization = InOrder
+	assert.Equal(t, tree.String(), "InOrder Traversal: [3 5 7 10 12 15 18]")
+	tree.TraversalVisualization = PostOrder
+	assert.Equal(t, tree.String(), "PostOrder Traversal: [3 7 5 12 18 15 10]")
+
+	treeEmpty := BinaryTree[int]{TraversalVisualization: PostOrder}
+	assert.False(t, treeEmpty.Search(10))
+	assert.Equal(t, treeEmpty.String(), "PostOrder Traversal: []")
+
+	treeSingle := BinaryTree[int]{TraversalVisualization: InOrder}
+	treeSingle.Insert(10)
+	assert.Equal(t, treeSingle.String(), "InOrder Traversal: [10]")
+
 }
