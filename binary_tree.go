@@ -171,34 +171,32 @@ func (bt *BinaryTree[T]) PostOrderTraversal() []T {
 
 //https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
 func buildTree(inorder, postorder []int) *TreeNode[int] {
-    if len(inorder) == 0 || len(postorder) == 0 {
-        return nil
-    }
-
-    rootVal := postorder[len(postorder)-1]
-    root := &TreeNode[int]{Val: rootVal}
-
-    inorderIndex := -1
+    indexMap := make(map[int]int)
     for i, v := range inorder {
-        if v == rootVal {
-            inorderIndex = i
-            break
+        indexMap[v] = i
+    }
+    
+    var helper func(int, int, int, int) *TreeNode[int]
+    helper = func(inLeft, inRight, postLeft, postRight int) *TreeNode[int] {
+        if inLeft > inRight || postLeft > postRight {
+            return nil
         }
+
+        rootVal := postorder[postRight]
+        root := &TreeNode[int]{Val: rootVal}
+
+        inorderIndex := indexMap[rootVal]
+        leftSize := inorderIndex - inLeft
+
+        root.Left = helper(inLeft, inorderIndex-1, postLeft, postLeft+leftSize-1)
+        root.Right = helper(inorderIndex+1, inRight, postLeft+leftSize, postRight-1)
+
+        return root
     }
 
-
-    leftInorder := inorder[:inorderIndex]
-    rightInorder := inorder[inorderIndex+1:]
-
-    leftSize := len(leftInorder)
-    leftPostorder := postorder[:leftSize]
-    rightPostorder := postorder[leftSize : len(postorder)-1]
-
-    root.Left = buildTree(leftInorder, leftPostorder)
-    root.Right = buildTree(rightInorder, rightPostorder)
-
-    return root
+    return helper(0, len(inorder)-1, 0, len(postorder)-1)
 }
+
 
 
 
