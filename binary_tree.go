@@ -169,6 +169,39 @@ func (bt *BinaryTree[T]) PostOrderTraversal() []T {
 	return result
 }
 
+//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
+func buildTree(inorder, postorder []int) *TreeNode[int] {
+    if len(inorder) == 0 || len(postorder) == 0 {
+        return nil
+    }
+
+    rootVal := postorder[len(postorder)-1]
+    root := &TreeNode[int]{Val: rootVal}
+
+    inorderIndex := -1
+    for i, v := range inorder {
+        if v == rootVal {
+            inorderIndex = i
+            break
+        }
+    }
+
+
+    leftInorder := inorder[:inorderIndex]
+    rightInorder := inorder[inorderIndex+1:]
+
+    leftSize := len(leftInorder)
+    leftPostorder := postorder[:leftSize]
+    rightPostorder := postorder[leftSize : len(postorder)-1]
+
+    root.Left = buildTree(leftInorder, leftPostorder)
+    root.Right = buildTree(rightInorder, rightPostorder)
+
+    return root
+}
+
+
+
 /**
  * Definition for a binary tree node.
  * https://leetcode.com/problems/binary-tree-inorder-traversal/

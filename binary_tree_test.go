@@ -72,4 +72,9 @@ func TestBinaryTree(t *testing.T) {
 		result = inorder(tree)
 		assert.Equal(t, result, []int{4,2,6,5,7,1,3,9,8})
 	})
+
+	t.Run("https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal", func (t *testing.T)  {
+		out := buildTree([]int{9,3, 15, 20, 7}, []int{9, 15, 7, 20, 3})
+		assert.Equal(t, out.Val , 3)
+	})
 }
