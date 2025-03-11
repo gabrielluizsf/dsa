@@ -12,15 +12,15 @@ func NewDeque() *Deque {
 	return &Deque{data: list.New()}
 }
 
-func (d *Deque) Append(val int) {
+func (d *Deque) Append(val any) {
 	d.data.PushBack(val)
 }
 
-func (d *Deque) Popleft() (int, bool) {
+func (d *Deque) Popleft() (any, bool) {
 	if d.data.Len() == 0 {
 		return 0, false
 	}
 	elem := d.data.Front()
 	d.data.Remove(elem)
-	return elem.Value.(int), true
+	return elem.Value, true
 }
