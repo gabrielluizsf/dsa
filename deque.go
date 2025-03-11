@@ -12,6 +12,10 @@ func NewDeque() *Deque {
 	return &Deque{data: list.New()}
 }
 
+func (d *Deque) Len() int {
+	return d.data.Len()
+}
+
 func (d *Deque) Append(val any) {
 	d.data.PushBack(val)
 }
