@@ -169,36 +169,54 @@ func (bt *BinaryTree[T]) PostOrderTraversal() []T {
 	return result
 }
 
-//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
-func buildTree(inorder, postorder []int) *TreeNode[int] {
-    indexMap := make(map[int]int)
-    for i, v := range inorder {
-        indexMap[v] = i
-    }
-    
-    var helper func(int, int, int, int) *TreeNode[int]
-    helper = func(inLeft, inRight, postLeft, postRight int) *TreeNode[int] {
-        if inLeft > inRight || postLeft > postRight {
-            return nil
-        }
-
-        rootVal := postorder[postRight]
-        root := &TreeNode[int]{Val: rootVal}
-
-        inorderIndex := indexMap[rootVal]
-        leftSize := inorderIndex - inLeft
-
-        root.Left = helper(inLeft, inorderIndex-1, postLeft, postLeft+leftSize-1)
-        root.Right = helper(inorderIndex+1, inRight, postLeft+leftSize, postRight-1)
-
-        return root
-    }
-
-    return helper(0, len(inorder)-1, 0, len(postorder)-1)
+func (bt *BinaryTree[T]) DFS(val T) bool {
+	return bt.dfsRecursive(bt.Root, val)
 }
 
+func (bt *BinaryTree[T]) dfsRecursive(node *TreeNode[T], val T) bool {
+	if node == nil {
+		return false
+	}
+	if node.Val == val {
+		return true
+	}
+	if bt.dfsRecursive(node.Left, val) {
+		return true
+	}
 
+	if bt.dfsRecursive(node.Right, val) {
+		return true
+	}
+	return false
+}
 
+// https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
+func buildTree(inorder, postorder []int) *TreeNode[int] {
+	indexMap := make(map[int]int)
+	for i, v := range inorder {
+		indexMap[v] = i
+	}
+
+	var helper func(int, int, int, int) *TreeNode[int]
+	helper = func(inLeft, inRight, postLeft, postRight int) *TreeNode[int] {
+		if inLeft > inRight || postLeft > postRight {
+			return nil
+		}
+
+		rootVal := postorder[postRight]
+		root := &TreeNode[int]{Val: rootVal}
+
+		inorderIndex := indexMap[rootVal]
+		leftSize := inorderIndex - inLeft
+
+		root.Left = helper(inLeft, inorderIndex-1, postLeft, postLeft+leftSize-1)
+		root.Right = helper(inorderIndex+1, inRight, postLeft+leftSize, postRight-1)
+
+		return root
+	}
+
+	return helper(0, len(inorder)-1, 0, len(postorder)-1)
+}
 
 /**
  * Definition for a binary tree node.
@@ -209,12 +227,12 @@ func buildTree(inorder, postorder []int) *TreeNode[int] {
  *     Right *TreeNode
  * }
  */
- func inorderTraversal(root *TreeNode[int]) []int {
-    return inorder(root)
+func inorderTraversal(root *TreeNode[int]) []int {
+	return inorder(root)
 }
 func inorder(root *TreeNode[int]) []int {
-    if root != nil {
-        return append(append(inorder(root.Left), root.Val), inorder(root.Right)...)
-    }
-    return []int{}
+	if root != nil {
+		return append(append(inorder(root.Left), root.Val), inorder(root.Right)...)
+	}
+	return []int{}
 }
