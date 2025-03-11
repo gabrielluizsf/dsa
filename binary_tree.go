@@ -236,3 +236,14 @@ func inorder(root *TreeNode[int]) []int {
 	}
 	return []int{}
 }
+
+// https://leetcode.com/problems/path-sum/
+func hasPathSum(root *TreeNode[int], targetSum int) bool {
+	if root == nil {
+		return false
+	}
+	if root.Right == nil && root.Left == nil {
+		return targetSum == root.Val
+	}
+	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
+}

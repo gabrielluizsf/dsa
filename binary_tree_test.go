@@ -93,4 +93,43 @@ func TestBinaryTree(t *testing.T) {
 		tree.TraversalVisualization = PreOrder
 		assert.Equal(t, tree.String(), "PreOrder Traversal: [3 9 20 15 7]")
 	})
+
+	t.Run("https://leetcode.com/problems/path-sum/", func(t *testing.T) {
+		tree := &TreeNode[int]{
+			Val: 1,
+			Left: &TreeNode[int]{
+				Val: 2,
+			},
+			Right: &TreeNode[int]{
+				Val: 3,
+			},
+		}
+		result := hasPathSum(tree, 5)
+		assert.False(t, result)
+	
+		tree = &TreeNode[int]{
+			Val: 5,
+			Left: &TreeNode[int]{
+				Val: 4,
+				Left: &TreeNode[int]{
+					Val: 11,
+					Left: &TreeNode[int]{
+						Val: 7,
+					},
+					Right: &TreeNode[int]{
+						Val: 2,
+					},
+				},
+			},
+			Right: &TreeNode[int]{
+				Val:  8,
+				Left: NewTreeNode(13),
+				Right: &TreeNode[int]{
+					Val:   4,
+					Right: NewTreeNode(1),
+				},
+			},
+		}
+		assert.True(t, hasPathSum(tree, 22))
+	})
 }
