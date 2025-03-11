@@ -48,6 +48,19 @@ func TestBinaryTree(t *testing.T) {
 		assert.True(t, tree.DFS(14))
 	})
 
+	t.Run("BFS", func(t *testing.T) {
+		tree := BinaryTree[int]{TraversalVisualization: PreOrder}
+		tree.Insert(10)
+		tree.Insert(11)
+		tree.Insert(12)
+		tree.Insert(14)
+		assert.False(t, tree.BFS(17))
+		assert.True(t, tree.BFS(10))
+		assert.True(t, tree.BFS(11))
+		assert.True(t, tree.BFS(12))
+		assert.True(t, tree.BFS(14))
+	})
+
 	t.Run("https://leetcode.com/problems/binary-tree-inorder-traversal/", func(t *testing.T) {
 		tree := &TreeNode[int]{
 			Val: 1,

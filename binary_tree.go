@@ -190,6 +190,33 @@ func (bt *BinaryTree[T]) dfsRecursive(node *TreeNode[T], val T) bool {
 	return false
 }
 
+func (bt *BinaryTree[T]) BFS(val T) bool {
+	if bt.Root == nil {
+		return false  
+	}
+	queue := NewDeque()
+	queue.Append(bt.Root)
+	for queue.Len() > 0 {
+		v, _ := queue.Popleft()
+		node, ok := v.(*TreeNode[T])
+		if !ok {
+			return false
+		}
+		if node.Val == val {
+			return true
+		} 		
+		if node.Left != nil {
+			queue.Append(node.Left)
+		}
+		if node.Right != nil {
+			queue.Append(node.Right)
+		}
+	}
+	return false
+}
+
+
+
 // https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
 func buildTree(inorder, postorder []int) *TreeNode[int] {
 	indexMap := make(map[int]int)
