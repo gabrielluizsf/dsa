@@ -314,3 +314,19 @@ func isSameTree(p, q *TreeNode[int]) bool {
 	}
 	return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right)
 }
+
+// https://leetcode.com/problems/maximum-depth-of-binary-tree
+func maxDepth(root *TreeNode[int]) int {
+	if root == nil {
+	  return 0
+  }
+  
+  leftDepth := maxDepth(root.Left)
+  rightDepth := maxDepth(root.Right)
+  
+  if leftDepth > rightDepth {
+	  return leftDepth + 1
+  } else {
+	  return rightDepth + 1
+  }
+}
