@@ -215,7 +215,7 @@ func (bt *BinaryTree[T]) BFS(val T) bool {
 	return false
 }
 
-//https://leetcode.com/problems/binary-tree-level-order-traversal 
+// https://leetcode.com/problems/binary-tree-level-order-traversal
 func levelOrder(root *TreeNode[int]) [][]int {
 	matrix := make([][]int, 0)
 	queue := NewDeque()
@@ -299,4 +299,18 @@ func hasPathSum(root *TreeNode[int], targetSum int) bool {
 		return targetSum == root.Val
 	}
 	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
+}
+
+// https://leetcode.com/problems/same-tree
+func isSameTree(p, q *TreeNode[int]) bool {
+	if p == nil && q == nil {
+		return true
+	}
+	if p == nil || q == nil {
+		return false
+	}
+	if !(p.Val == q.Val) {
+		return false
+	}
+	return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right)
 }
