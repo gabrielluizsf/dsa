@@ -36,3 +36,18 @@ func TestCloneGraph(t *testing.T) {
 		}
 	})
 }
+
+func TestDijkstra(t *testing.T) {
+	graph := map[string][]Edge[int]{
+		"A": {{"B", 1}, {"C", 4}},
+		"B": {{"A", 1}, {"C", 2}, {"D", 5}},
+		"C": {{"A", 4}, {"B", 2}, {"D", 1}},
+		"D": {{"B", 5}, {"C", 1}},
+	}
+
+	distances := Dijkstra(graph, "A")
+	assert.Equal(t, 0, distances["A"])
+	assert.Equal(t, 1, distances["B"])
+	assert.Equal(t, 3, distances["C"])
+	assert.Equal(t, 4, distances["D"])
+}
