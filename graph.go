@@ -65,6 +65,46 @@ func Dijkstra(graph map[string][]Edge[int], start string) (distances map[string]
 	return 
 }
 
+//https://leetcode.com/problems/number-of-islands/
+func numIslands(grid [][]byte) int {
+    if len(grid) == 0 || len(grid[0]) == 0 {
+        return 0
+    }
+
+    m, n := len(grid), len(grid[0])
+    total := 0
+
+    // Define the DFS function inline
+    var dfs func(int, int)
+    dfs = func(i, j int) {
+        // Check boundaries and if the current cell is part of an island
+        if i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != '1' {
+            return
+        }
+
+        // Mark the cell as visited
+        grid[i][j] = '0'
+
+        // Explore all four directions
+        dfs(i-1, j) // Up
+        dfs(i+1, j) // Down
+        dfs(i, j-1) // Left
+        dfs(i, j+1) // Right
+    }
+
+    // Iterate through the grid to find islands
+    for i := 0; i < m; i++ {
+        for j := 0; j < n; j++ {
+            if grid[i][j] == '1' {
+                total++
+                dfs(i, j)
+            }
+        }
+    }
+
+    return total
+}
+
 // https://leetcode.com/problems/clone-graph/
 func cloneGraph(node *GraphNode[int]) *GraphNode[int] {
 	if node == nil {

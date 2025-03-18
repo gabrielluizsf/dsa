@@ -51,3 +51,21 @@ func TestDijkstra(t *testing.T) {
 	assert.Equal(t, 3, distances["C"])
 	assert.Equal(t, 4, distances["D"])
 }
+
+func TestNumberOfIslands(t *testing.T) {
+	grid := [][]byte{
+		{'1', '1', '1', '1', '0'},
+		{'1', '1', '0', '1', '0'},
+		{'1', '1', '0', '0', '0'},
+		{'0', '0', '0', '0', '0'},
+	}
+	assert.Equal(t, numIslands(grid), 1)
+
+	grid = [][]byte{
+		{'1', '1', '0', '0', '0'},
+		{'1', '1', '0', '0', '0'},
+		{'0', '0', '1', '0', '0'},
+		{'0', '0', '0', '1', '1'},
+	}
+	assert.Equal(t, numIslands(grid), 3)
+}
